@@ -1,15 +1,23 @@
 const shipFactory = (length) => {
   const shipBoard = [];
+  for (let i = 0; i < length; i += 1) {
+    shipBoard[i] = '';
+  }
   const hit = (position) => {
     shipBoard[position - 1] = 'X';
   };
+
+  const checkforX = (value) => value === 'X';
+
   const isSunk = () => {
-    if (shipBoard.length === length) {
+    if (shipBoard.every(checkforX)) {
       return true;
     }
     return false;
   };
-  return { length, hit, isSunk };
+  return {
+    length, hit, isSunk, shipBoard,
+  };
 };
 
 export default shipFactory;
