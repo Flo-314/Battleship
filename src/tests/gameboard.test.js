@@ -3,12 +3,24 @@
 import GameboardFactory from '../gameboard';
 import shipFactory from '../ship';
 
-const normalShip = shipFactory(3);
 const gameboard = GameboardFactory();
-const attackedShip = shipFactory(1);
+const bugship = shipFactory(2);
+
+const normalShip = shipFactory(3);
 gameboard.putShip(normalShip, 10, 2);
-gameboard.putShip(attackedShip, 4, 4);
+gameboard.receiveAttack(10, 2);
+
+const smallShip = shipFactory(1);
+gameboard.putShip(smallShip, 4, 4);
 gameboard.receiveAttack(4, 4);
+
+const mediumShip = shipFactory(2);
+gameboard.putShip(mediumShip, 5, 1);
+gameboard.receiveAttack(5, 1);
+gameboard.receiveAttack(5, 2);
+gameboard.receiveAttack(5, 3);
+
+// receive attack of
 
 test('putShip in the exact cordinates', () => {
   expect(gameboard.board[20]).toBe(normalShip);
@@ -16,9 +28,17 @@ test('putShip in the exact cordinates', () => {
 test('putShip using the lenght of the ship', () => {
   expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(normalShip + normalShip + normalShip);
 });
-
-test('receiveAttack in a ship', () => {
-  expect(attackedShip.isSunk()).toBe(true);
+test('putShip in a not empty space', () => {
+  expect(gameboard.putShip(bugship, 4, 4)).toBe('error');
+});
+test('receiveAttack and sunk a 1length ship', () => {
+  expect(smallShip.isSunk()).toBe(true);
+});
+test('receiveAttack check if the sunk of larger is bug', () => {
+  expect(normalShip.isSunk()).toBe(false);
+});
+test('receiveAttack in a medium sunk boat', () => {
+  expect(mediumShip.isSunk()).toBe(true);
 });
 
 /*
