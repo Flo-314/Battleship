@@ -1,8 +1,7 @@
-const GameboardFactory = () => {
-  const board = Array(100).fill('');
+const helperMethods = (() => {
   const cordsToIndex = (cord1, cord2) => cord1 + (cord2 - 1) * 10 - 1;
 
-  const checkValidPosition = (ship, cord1, cord2) => {
+  const checkValidPosition = (ship, cord1, cord2, board) => {
     let condition = true;
     for (let i = 0; i < ship.length; i += 1) {
       if (board[cordsToIndex(cord1, cord2) + i] !== '') {
@@ -11,8 +10,17 @@ const GameboardFactory = () => {
     }
     return condition;
   };
+  return { cordsToIndex, checkValidPosition };
+})();
+
+const GameboardFactory = () => {
+  const board = Array(100).fill('');
+
+  const { cordsToIndex } = helperMethods;
+  const { checkValidPosition } = helperMethods;
+
   const putShip = (ship, cord1, cord2) => {
-    if (checkValidPosition(ship, cord1, cord2)) {
+    if (checkValidPosition(ship, cord1, cord2, board)) {
       for (let i = 0; i < ship.length; i += 1) {
         board[cordsToIndex(cord1, cord2) + i] = ship;
       }
