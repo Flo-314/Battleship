@@ -4,7 +4,6 @@ import GameboardFactory from '../gameboard';
 import shipFactory from '../ship';
 
 const gameboard = GameboardFactory();
-const bugship = shipFactory(2);
 
 const normalShip = shipFactory(3);
 gameboard.putShip(normalShip, 10, 2);
@@ -21,6 +20,8 @@ gameboard.receiveAttack(5, 2);
 gameboard.receiveAttack(5, 3);
 
 // receive attack of
+const bugship = shipFactory(2);
+gameboard.putShip(bugship, 4, 4);
 
 test('putShip in the exact cordinates', () => {
   expect(gameboard.board[20]).toBe(normalShip);
@@ -29,7 +30,7 @@ test('putShip using the lenght of the ship', () => {
   expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(normalShip + normalShip + normalShip);
 });
 test('putShip in a not empty space', () => {
-  expect(gameboard.putShip(bugship, 4, 4)).toBe('error');
+  expect(gameboard.board[33]).toBe(smallShip);
 });
 test('receiveAttack and sunk a 1length ship', () => {
   expect(smallShip.isSunk()).toBe(true);
