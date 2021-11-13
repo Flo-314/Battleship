@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1636811350499" clover="3.2.0">
-  <project timestamp="1636811350499" name="All files">
+<coverage generated="1636811618367" clover="3.2.0">
+  <project timestamp="1636811618367" name="All files">
     <metrics statements="50" coveredstatements="49" conditionals="10" coveredconditionals="9" methods="12" coveredmethods="12" elements="72" coveredelements="70" complexity="0" loc="50" ncloc="50" packages="1" files="2" classes="2"/>
-    <file name="gameboard.js" path="/home/juli/battleship/src/gameboard.js">
+    <file name="gameboard.js" path="/home/juli/battleship/src/factoryF/gameboard.js">
       <metrics statements="37" coveredstatements="36" conditionals="8" coveredconditionals="7" methods="8" coveredmethods="8"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="26" type="stmt"/>
@@ -34,15 +34,15 @@
       <line num="40" count="8" type="stmt"/>
       <line num="42" count="0" type="stmt"/>
       <line num="46" count="2" type="stmt"/>
-      <line num="47" count="2" type="stmt"/>
-      <line num="48" count="2" type="stmt"/>
-      <line num="49" count="5" type="stmt"/>
-      <line num="50" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="47" count="1" type="stmt"/>
+      <line num="48" count="1" type="stmt"/>
+      <line num="49" count="3" type="stmt"/>
+      <line num="50" count="3" type="cond" truecount="2" falsecount="0"/>
       <line num="51" count="1" type="stmt"/>
-      <line num="54" count="2" type="stmt"/>
+      <line num="54" count="1" type="stmt"/>
       <line num="57" count="2" type="stmt"/>
     </file>
-    <file name="ship.js" path="/home/juli/battleship/src/ship.js">
+    <file name="ship.js" path="/home/juli/battleship/src/factoryF/ship.js">
       <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="6" type="stmt"/>
@@ -51,11 +51,11 @@
       <line num="5" count="12" type="stmt"/>
       <line num="7" count="6" type="stmt"/>
       <line num="8" count="8" type="stmt"/>
-      <line num="11" count="13" type="stmt"/>
+      <line num="11" count="6" type="stmt"/>
       <line num="13" count="6" type="stmt"/>
-      <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
-      <line num="15" count="6" type="stmt"/>
-      <line num="17" count="2" type="stmt"/>
+      <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="2" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
       <line num="19" count="6" type="stmt"/>
     </file>
   </project>
