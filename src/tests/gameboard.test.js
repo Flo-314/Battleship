@@ -7,30 +7,30 @@ const gameboard = GameboardFactory();
 
 const normalShip = shipFactory(3);
 gameboard.putShip(normalShip, 10, 2);
-gameboard.receiveAttack(10, 2);
+gameboard.receiveAttack(1, 3);
 
 const smallShip = shipFactory(1);
 gameboard.putShip(smallShip, 4, 4);
 gameboard.receiveAttack(4, 4);
 
-const mediumShip = shipFactory(2);
-gameboard.putShip(mediumShip, 5, 1);
-gameboard.receiveAttack(5, 1);
-gameboard.receiveAttack(5, 2);
-gameboard.receiveAttack(5, 3);
+const mediumShip = shipFactory(3);
+gameboard.putShip(mediumShip, 7, 7);
+gameboard.receiveAttack(7, 7);
+gameboard.receiveAttack(8, 7);
+gameboard.receiveAttack(9, 7);
 
 // receive attack of
 const bugship = shipFactory(2);
-gameboard.putShip(bugship, 4, 4);
+gameboard.putShip(bugship, 10, 2);
 
 test('putShip in the exact cordinates', () => {
-  expect(gameboard.board[20]).toBe(normalShip);
+  expect(gameboard.board[19]).toBe(normalShip);
 });
 test('putShip using the lenght of the ship', () => {
-  expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(normalShip + normalShip + normalShip);
+  expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(`${normalShip}X${normalShip}`);
 });
 test('putShip in a not empty space', () => {
-  expect(gameboard.board[33]).toBe(smallShip);
+  expect(gameboard.board[19]).toBe(normalShip);
 });
 test('receiveAttack and sunk a 1length ship', () => {
   expect(smallShip.isSunk()).toBe(true);

@@ -1,5 +1,6 @@
 const shipFactory = (length) => {
   const shipBoard = [];
+  const index = [];
   for (let i = 0; i < length; i += 1) {
     shipBoard[i] = '';
   }
@@ -16,7 +17,7 @@ const shipFactory = (length) => {
     return false;
   };
   return {
-    length, hit, isSunk, shipBoard,
+    length, hit, isSunk, shipBoard, index,
   };
 };
 
