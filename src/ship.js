@@ -1,4 +1,4 @@
-const shipFactory = (length) => {
+const ShipFactory = (length) => {
   const shipBoard = [];
   const index = [];
   for (let i = 0; i < length; i += 1) {
@@ -21,4 +21,4 @@ const shipFactory = (length) => {
   };
 };
 
-export default shipFactory;
+export default ShipFactory;

@@ -15,6 +15,7 @@ const helperMethods = (() => {
 
 const GameboardFactory = () => {
   const board = Array(100).fill('');
+  const shipArray = [];
 
   const { cordsToIndex } = helperMethods;
   const { checkValidPosition } = helperMethods;
@@ -27,6 +28,7 @@ const GameboardFactory = () => {
         const infoObject = { position: 1 + i, cord: cords + i };
         ship.index.unshift(infoObject);
       }
+      shipArray.unshift(ship);
     }
   };
 
@@ -36,11 +38,25 @@ const GameboardFactory = () => {
       const ship = board[cords];
       const position = ship.index.find((cord) => cord.cord === cords);
       ship.hit(position.position);
+    } else {
       board[cords] = 'X';
     }
   };
 
-  return { board, putShip, receiveAttack };
+  const allSunked = () => {
+    let isSunked = true;
+    for (let index = 0; index < shipArray.length; index += 1) {
+      const ship = shipArray[index];
+      if (!ship.isSunk()) {
+        isSunked = false;
+      }
+    }
+    return isSunked;
+  };
+
+  return {
+    board, putShip, receiveAttack, allSunked, shipArray,
+  };
 };
 
 export default GameboardFactory;
