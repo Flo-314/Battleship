@@ -34,7 +34,7 @@ test('putShip in the exact cordinates', () => {
   expect(gameboard.board[19]).toBe(normalShip);
 });
 test('putShip using the lenght of the ship', () => {
-  expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(normalShip + normalShip + normalShip);
+  expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(`${normalShip}X${normalShip}`);
 });
 test('putShip in a not empty space', () => {
   expect(gameboard.board[19]).toBe(normalShip);

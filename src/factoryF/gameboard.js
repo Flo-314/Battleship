@@ -38,9 +38,14 @@ const GameboardFactory = () => {
       const ship = board[cords];
       const position = ship.index.find((cord) => cord.cord === cords);
       ship.hit(position.position);
-    } else {
       board[cords] = 'X';
+      return true;
     }
+    if (board[cords] !== 'X') {
+      board[cords] = 'X';
+      return true;
+    }
+    return false;
   };
 
   const allSunked = () => {

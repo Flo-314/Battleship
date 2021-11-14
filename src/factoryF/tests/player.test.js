@@ -7,13 +7,21 @@ import PlayerFactory from '../player';
 
 const ia = PlayerFactory('ia');
 const player = PlayerFactory('player');
-player.attack(3, 4);
+player.attack(3, 4, ia);
+ia.iaAttack(player);
 test('check if playerturn is always true', () => {
   expect(player.turn).toBe(true);
 });
 
 test('check if player attack works', () => {
-  expect(ia.gameboard.GameboardFactory[32]).toBe('X');
+  expect(ia.playerGameboard.board[32]).toBe('X');
+});
+test('check if iarandom atack works', () => {
+  expect(ia.turn).toBe(true);
+});
+
+test('check if iarandom atack works', () => {
+  expect(player.board.includes('X')).toBe(true);
 });
 
 /*
