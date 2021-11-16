@@ -20,8 +20,11 @@ const GameboardFactory = () => {
   const { cordsToIndex } = helperMethods;
   const { checkValidPosition } = helperMethods;
 
-  const putShip = (ship, cord1, cord2) => {
-    const cords = cordsToIndex(cord1, cord2);
+  const putShip = (ship, cord1, cord2, cordinates) => {
+    let cords = cordsToIndex(cord1, cord2);
+    if (cordinates) {
+      cords = cordinates;
+    }
     if (checkValidPosition(ship, cord1, cord2, board)) {
       for (let i = 0; i < ship.length; i += 1) {
         board[cords + i] = ship;
@@ -32,8 +35,11 @@ const GameboardFactory = () => {
     }
   };
 
-  const receiveAttack = (cord1, cord2) => {
-    const cords = cordsToIndex(cord1, cord2);
+  const receiveAttack = (cord1, cord2, cordinates) => {
+    let cords = cordsToIndex(cord1, cord2);
+    if (cordinates) {
+      cords = cordinates;
+    }
     if (typeof board[cords] === 'object') {
       const ship = board[cords];
       const position = ship.index.find((cord) => cord.cord === cords);

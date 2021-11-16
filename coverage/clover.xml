@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1636894022039" clover="3.2.0">
-  <project timestamp="1636894022039" name="All files">
+<coverage generated="1636900191871" clover="3.2.0">
+  <project timestamp="1636900191871" name="All files">
     <metrics statements="70" coveredstatements="34" conditionals="18" coveredconditionals="6" methods="15" coveredmethods="7" elements="103" coveredelements="47" complexity="0" loc="70" ncloc="70" packages="1" files="3" classes="3"/>
     <file name="gameboard.js" path="/home/juli/battleship/src/factoryF/gameboard.js">
       <metrics statements="42" coveredstatements="18" conditionals="10" coveredconditionals="2" methods="8" coveredmethods="4"/>

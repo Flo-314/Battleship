@@ -23,6 +23,9 @@ test('check if iarandom atack works', () => {
 test('check if iarandom atack works', () => {
   expect(player.board.includes('X')).toBe(true);
 });
+test('check if iarandom atack works', () => {
+  expect(player.board.includes('X')).toBe(true);
+});
 
 /*
 
