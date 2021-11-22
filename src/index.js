@@ -6,7 +6,7 @@ const gameboardMethods = (() => {
     const main = document.querySelector('main');
     const gameboard = document.createElement('div');
     gameboard.classList.add('gameboard');
-    gameboard.classList.add('player');
+    gameboard.classList.add(player.name);
     main.append(gameboard);
     for (let i = 0; i < player.board.length; i += 1) {
       const cell = document.createElement('div');
@@ -15,9 +15,31 @@ const gameboardMethods = (() => {
     }
   };
 
+  return {
+    createGameboard,
+  };
+})();
+
+const cellListeners = (() => {
   const printHit = (playerName, position) => {
-    const cellArray = document.querySelector(`#${playerName}`).children;
+    const cellArray = document.querySelector(`.${playerName}`).children;
     cellArray[position].textContent = 'X';
+  };
+
+  const hitListener = (ia, cordinates, player) => {
+    ia.playerGameboard.receiveAttack(1, 1, cordinates);
+    printHit('ia', cordinates);
+    printHit('player', ia.iaAttack(player));
+  };
+
+  const addHitListener = (ia, player) => {
+    const cellNodes = document.querySelector('.ia').children;
+    for (let index = 0; index < cellNodes.length; index += 1) {
+      const cell = cellNodes[index];
+      cell.addEventListener('click', () => {
+        hitListener(ia, index, player);
+      });
+    }
   };
 
   const printShip = (ship, cordinates) => {
@@ -31,11 +53,10 @@ const gameboardMethods = (() => {
   const shipListener = (player, ship, cordinates) => {
     if (player.playerGameboard.putShip(ship, 1, 1, cordinates)) {
       printShip(ship, cordinates);
-      console.log(player.playerGameboard.board);
     }
   };
   const addShipListener = (player, ship) => {
-    const cellNodes = document.querySelectorAll('.gameboard')[1].children;
+    const cellNodes = document.querySelector(`.${player.name}`).children;
     for (let index = 0; index < cellNodes.length; index += 1) {
       const cell = cellNodes[index];
       cell.addEventListener('click', () => {
@@ -44,34 +65,17 @@ const gameboardMethods = (() => {
     }
   };
 
-  const hitListener = (ia, cordinates) => {
-    ia.receiveAttack(1, 1, cordinates);
-    printHit('ia', cordinates);
-    printHit('player', ia.iaAttack());
-  };
-
-  const addHitListener = (ia) => {
-    const cellNodes = document.querySelectorAll('.gameboard')[1].children;
-    for (let index = 0; index < cellNodes.length; index += 1) {
-      const cell = cellNodes[index];
-      cell.addEventListener('click', () => {
-        hitListener(ia, index + 1);
-      });
-    }
-  };
-
-  return {
-    createGameboard, addHitListener, addShipListener, printShip,
-  };
+  return { addHitListener, addShipListener, printShip };
 })();
+
 const gameMethods = (() => {
   const newGame = () => {
     const player = PlayerFactory('player');
     const ia = PlayerFactory('ia');
     gameboardMethods.createGameboard(player);
     gameboardMethods.createGameboard(ia);
-    const bugship = ShipFactory(2);
-    gameboardMethods.addShipListener(player, bugship);
+    const bugship = ShipFactory(4);
+    cellListeners.addHitListener(ia, player);
   };
   const checkForWin = (player, ia) => {
     if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }

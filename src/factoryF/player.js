@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import GameboardFactory from './gameboard';
 
-const PlayerFactory = (playerName) => {
+const PlayerFactory = (name) => {
   let turn;
-  if (playerName === 'player') { turn = true; } else { turn = false; }
+  if (name === 'player') { turn = true; } else { turn = false; }
 
   const playerGameboard = GameboardFactory();
 
@@ -13,18 +13,26 @@ const PlayerFactory = (playerName) => {
     if (player.playerGameboard.receiveAttack(cord1, cord2)) {
       turn = false;
       player.turn = true;
+      return true;
     }
+    return false;
   };
+  // eslint-disable-next-line consistent-return
   const iaAttack = (player) => {
-    const cord1 = Math.floor(Math.random() * (10 - 1)) + 1;
-    const cord2 = Math.floor(Math.random() * (10 - 1)) + 1;
-    if (player.playerGameboard.receiveAttack(cord1, cord2)) {
-      turn = false;
-      player.turn = true;
+    let cord1 = Math.floor(Math.random() * (11 - 1)) + 1;
+    let cord2 = Math.floor(Math.random() * (11 - 1)) + 1;
+    while (player.playerGameboard.receiveAttack(cord1, cord2) !== true) {
+      cord1 = Math.floor(Math.random() * (11 - 1)) + 1;
+      cord2 = Math.floor(Math.random() * (11 - 1)) + 1;
     }
+    player.playerGameboard.receiveAttack(cord1, cord2);
+    turn = false;
+    player.turn = true;
+    return cord1 + (cord2 - 1) * 10 - 1;
   };
+
   return {
-    playerGameboard, attack, board, turn, iaAttack,
+    playerGameboard, attack, board, turn, iaAttack, name,
   };
 };
 

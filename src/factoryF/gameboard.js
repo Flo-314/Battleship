@@ -16,7 +16,6 @@ const helperMethods = (() => {
 const GameboardFactory = () => {
   const board = Array(100).fill('');
   const shipArray = [];
-
   const { cordsToIndex } = helperMethods;
   const { checkValidPosition } = helperMethods;
 
@@ -43,7 +42,8 @@ const GameboardFactory = () => {
     if (cordinates) {
       cords = cordinates;
     }
-    if (typeof board[cords] === 'object') {
+    /*     console.log(cords);
+ */ if (typeof board[cords] === 'object') {
       const ship = board[cords];
       const position = ship.index.find((cord) => cord.cord === cords);
       ship.hit(position.position);
