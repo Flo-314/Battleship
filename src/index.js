@@ -1,12 +1,14 @@
 import PlayerFactory from './factoryF/player';
+import ShipFactory from './factoryF/ship';
 
 const gameboardMethods = (() => {
-  const createGameboard = (playerGameboard) => {
+  const createGameboard = (player) => {
     const main = document.querySelector('main');
     const gameboard = document.createElement('div');
+    gameboard.classList.add('gameboard');
+    gameboard.classList.add('player');
     main.append(gameboard);
-    for (let i = 0; i < playerGameboard.length; i += 1) {
-      gameboard.classList.add('gameboard');
+    for (let i = 0; i < player.board.length; i += 1) {
       const cell = document.createElement('div');
       cell.classList.add('cell');
       gameboard.appendChild(cell);
@@ -19,16 +21,18 @@ const gameboardMethods = (() => {
   };
 
   const printShip = (ship, cordinates) => {
-    const cellArray = document.querySelector(`#${'player'}`).children;
-    for (let index = cordinates; index < ship.length; index += 1) {
-      const cell = cellArray[index];
+    const cellArray = document.querySelector(`.${'player'}`).children;
+    for (let index = 0; index < ship.length; index += 1) {
+      const cell = cellArray[index + cordinates - 1];
       cell.textContent = 'O';
     }
   };
 
   const shipListener = (player, ship, cordinates) => {
-    player.putShip(ship, 1, 1, cordinates);
-    printShip(ship, cordinates);
+    if (player.playerGameboard.putShip(ship, 1, 1, cordinates)) {
+      printShip(ship, cordinates);
+      console.log(player.playerGameboard.board);
+    }
   };
   const addShipListener = (player, ship) => {
     const cellNodes = document.querySelectorAll('.gameboard')[1].children;
@@ -56,15 +60,18 @@ const gameboardMethods = (() => {
     }
   };
 
-  return { createGameboard, addHitListener, addShipListener };
+  return {
+    createGameboard, addHitListener, addShipListener, printShip,
+  };
 })();
 const gameMethods = (() => {
   const newGame = () => {
     const player = PlayerFactory('player');
     const ia = PlayerFactory('ia');
-    ia.iaAttack();
-    gameboardMethods.createGameboard(player.board);
-    gameboardMethods.createGameboard(ia.board);
+    gameboardMethods.createGameboard(player);
+    gameboardMethods.createGameboard(ia);
+    const bugship = ShipFactory(2);
+    gameboardMethods.addShipListener(player, bugship);
   };
   const checkForWin = (player, ia) => {
     if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }

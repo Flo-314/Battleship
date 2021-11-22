@@ -36,7 +36,11 @@ main .gameboard {
  margin: 60px;
 }
 main .gameboard .cell{
+  display: flex;
+  font-size: 250%;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
-border: 1px solid white;
-height: 50px;
+  border: 1px solid white;
+  height: 50px;
 }

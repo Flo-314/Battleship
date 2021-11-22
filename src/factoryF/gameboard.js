@@ -31,8 +31,11 @@ const GameboardFactory = () => {
         const infoObject = { position: 1 + i, cord: cords + i };
         ship.index.unshift(infoObject);
       }
+
       shipArray.unshift(ship);
+      return true;
     }
+    return false;
   };
 
   const receiveAttack = (cord1, cord2, cordinates) => {
