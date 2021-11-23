@@ -74,8 +74,10 @@ const gameMethods = (() => {
     const ia = PlayerFactory('ia');
     gameboardMethods.createGameboard(player);
     gameboardMethods.createGameboard(ia);
-    const bugship = ShipFactory(4);
-    cellListeners.addHitListener(ia, player);
+    const bugship = ShipFactory(2);
+    /*     cellListeners.addHitListener(ia, player);
+ */
+    cellListeners.addShipListener(player, bugship);
   };
   const checkForWin = (player, ia) => {
     if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }

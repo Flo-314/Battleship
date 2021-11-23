@@ -5,7 +5,7 @@ import ShipFactory from '../ship';
 
 // mock for putship and receiveattack
 const gameboard = GameboardFactory();
-const normalShip = ShipFactory(3);
+const normalShip = ShipFactory(1);
 gameboard.putShip(normalShip, 10, 2);
 gameboard.receiveAttack(1, 3);
 const smallShip = ShipFactory(1);
@@ -34,7 +34,7 @@ test('putShip in the exact cordinates', () => {
   expect(gameboard.board[19]).toBe(normalShip);
 });
 test('putShip using the lenght of the ship', () => {
-  expect(gameboard.board[19] + gameboard.board[20] + gameboard.board[21]).toBe(`${normalShip}X${normalShip}`);
+  expect(gameboard.board[19]).toBe(normalShip);
 });
 test('putShip in a not empty space', () => {
   expect(gameboard.board[19]).toBe(normalShip);

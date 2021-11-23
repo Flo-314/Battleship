@@ -1,15 +1,53 @@
 const helperMethods = (() => {
   const cordsToIndex = (cord1, cord2) => cord1 + (cord2 - 1) * 10 - 1;
 
-  const checkValidPosition = (ship, cord1, cord2, board) => {
+  const checkIfPositionIsUsed = (ship, cord1, cord2, cords, board) => {
     let condition = true;
-    for (let i = 0; i < ship.length; i += 1) {
-      if (board[cordsToIndex(cord1, cord2) + i] !== '') {
-        condition = false;
+
+    if (cords) {
+      for (let i = 0; i < ship.length; i += 1) {
+        if (board[cords + i] !== '') {
+          condition = false;
+        }
+      }
+    } else {
+      for (let i = 0; i < ship.length; i += 1) {
+        if (board[cordsToIndex(cord1, cord2) + i] !== '') {
+          condition = false;
+        }
       }
     }
     return condition;
   };
+
+  const checkIfPositionIsntBorder = (ship, cord1, cord2, cords) => {
+    let cordinates = cordsToIndex(cord1, cord2) - 1;
+
+    if (cords) {
+      cordinates = cords - 1;
+    }
+    let expectedCordinates = cordinates + ship.length;
+    expectedCordinates = expectedCordinates.toString() - 1;
+
+    cordinates = cordinates.toString();
+
+    if (cordinates.length === 1) {
+      if (expectedCordinates < 10) {
+        return true;
+      }
+    } else if (expectedCordinates.toString()[0] === cordinates[0]) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkValidPosition = (ship, cord1, cord2, cords, board) => {
+    if (checkIfPositionIsUsed(ship, cord1, cord2, cords, board) && checkIfPositionIsntBorder(ship, cord1, cord2, cords)) {
+      return true;
+    }
+    return false;
+  };
+
   return { cordsToIndex, checkValidPosition };
 })();
 
@@ -21,10 +59,12 @@ const GameboardFactory = () => {
 
   const putShip = (ship, cord1, cord2, cordinates) => {
     let cords = cordsToIndex(cord1, cord2);
+
     if (cordinates) {
       cords = cordinates;
     }
-    if (checkValidPosition(ship, cord1, cord2, board)) {
+
+    if (checkValidPosition(ship, cord1, cord2, cords, board)) {
       for (let i = 0; i < ship.length; i += 1) {
         board[cords + i] = ship;
         const infoObject = { position: 1 + i, cord: cords + i };

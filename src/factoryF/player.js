@@ -21,10 +21,13 @@ const PlayerFactory = (name) => {
   const iaAttack = (player) => {
     let cord1 = Math.floor(Math.random() * (11 - 1)) + 1;
     let cord2 = Math.floor(Math.random() * (11 - 1)) + 1;
+
+    // While the cords arent in a valid position the loops repeats
     while (player.playerGameboard.receiveAttack(cord1, cord2) !== true) {
       cord1 = Math.floor(Math.random() * (11 - 1)) + 1;
       cord2 = Math.floor(Math.random() * (11 - 1)) + 1;
     }
+
     player.playerGameboard.receiveAttack(cord1, cord2);
     turn = false;
     player.turn = true;
