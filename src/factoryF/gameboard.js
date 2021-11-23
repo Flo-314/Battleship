@@ -27,6 +27,8 @@ const helperMethods = (() => {
       cordinates = cords - 1;
     }
     let expectedCordinates = cordinates + ship.length;
+    console.log(expectedCordinates, cordinates);
+
     expectedCordinates = expectedCordinates.toString() - 1;
 
     cordinates = cordinates.toString();
@@ -42,6 +44,7 @@ const helperMethods = (() => {
   };
 
   const checkValidPosition = (ship, cord1, cord2, cords, board) => {
+    // eslint-disable-next-line max-len
     if (checkIfPositionIsUsed(ship, cord1, cord2, cords, board) && checkIfPositionIsntBorder(ship, cord1, cord2, cords)) {
       return true;
     }
