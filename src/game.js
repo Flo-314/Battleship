@@ -1,6 +1,5 @@
 import PlayerFactory from './factoryF/player';
-import ShipFactory from './factoryF/ship';
-import { gameboardMethods, cellListeners } from './gameboard';
+import { gameboardMethods, cellListeners } from './domMethods/gameboard';
 
 /* To do :
 
@@ -9,16 +8,30 @@ import { gameboardMethods, cellListeners } from './gameboard';
 *beautify the css
  */
 
+/*
+
+*Un meter barcos state
+
+*Cada vez q metes un barco  se suma un I
+*SI I ES = 5 se termina el barco staate, IAPutSHips()
+
+* se inicia el  war State
+
+*cada tiro que checkie for win.
+
+** si  alguien winnea que tire un prompt horrible y que recargue la pagina.
+
+*/
+
 const gameMethods = (() => {
   const newGame = () => {
     const player = PlayerFactory('player');
     const ia = PlayerFactory('ia');
     gameboardMethods.createGameboard(player);
     gameboardMethods.createGameboard(ia);
-    const bugship = ShipFactory(2);
-    cellListeners.addHitListener(ia, player);
-    /*     cellListeners.addShipListener(player, bugship);
-   */ };
+    /*     cellListeners.addHitListener(ia, player);
+ */ cellListeners.addShipListener(player);
+  };
   const checkForWin = (player, ia) => {
     if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }
   };

@@ -1,3 +1,5 @@
+import ShipFactory from '../factoryF/ship';
+
 const gameboardMethods = (() => {
   const createGameboard = (player) => {
     const main = document.querySelector('main');
@@ -18,6 +20,7 @@ const gameboardMethods = (() => {
 })();
 
 const cellListeners = (() => {
+  let shipCount = 0;
   const printHit = (playerName, position) => {
     const cellArray = document.querySelector(`.${playerName}`).children;
     cellArray[position].textContent = 'X';
@@ -39,6 +42,17 @@ const cellListeners = (() => {
     }
   };
 
+  const createShipList = () => {
+    const carrier = ShipFactory(5);
+    const battleship = ShipFactory(4);
+    const cruiser = ShipFactory(3);
+    const submarine = ShipFactory(3);
+    const destroyer = ShipFactory(2);
+    const patrolBoat = ShipFactory(1);
+    const ferry = ShipFactory(1);
+    const shipList = [carrier, battleship, cruiser, submarine, destroyer, patrolBoat, ferry];
+    return shipList;
+  };
   const printShip = (ship, cordinates) => {
     const cellArray = document.querySelector(`.${'player'}`).children;
     for (let index = 0; index < ship.length; index += 1) {
@@ -47,17 +61,20 @@ const cellListeners = (() => {
     }
   };
 
-  const shipListener = (player, ship, cordinates) => {
-    if (player.playerGameboard.putShip(ship, 1, 1, cordinates)) {
-      printShip(ship, cordinates);
+  const shipListener = (player, cordinates) => {
+    const shipList = createShipList();
+    console.log(shipCount);
+    if (shipList[shipCount] && player.playerGameboard.putShip(shipList[shipCount], 1, 1, cordinates)) {
+      printShip(shipList[shipCount], cordinates);
+      shipCount += 1;
     }
   };
-  const addShipListener = (player, ship) => {
+  const addShipListener = (player) => {
     const cellNodes = document.querySelector(`.${player.name}`).children;
     for (let index = 0; index < cellNodes.length; index += 1) {
       const cell = cellNodes[index];
       cell.addEventListener('click', () => {
-        shipListener(player, ship, index + 1);
+        shipListener(player, index + 1);
       });
     }
   };
