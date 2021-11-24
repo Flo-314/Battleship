@@ -29,8 +29,7 @@ const gameMethods = (() => {
     const ia = PlayerFactory('ia');
     gameboardMethods.createGameboard(player);
     gameboardMethods.createGameboard(ia);
-    /*     cellListeners.addHitListener(ia, player);
- */ cellListeners.addShipListener(player);
+    cellListeners.addShipListener(player, ia);
   };
   const checkForWin = (player, ia) => {
     if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }
