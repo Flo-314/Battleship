@@ -31,10 +31,8 @@ const gameMethods = (() => {
     gameboardMethods.createGameboard(ia);
     cellListeners.addShipListener(player, ia);
   };
-  const checkForWin = (player, ia) => {
-    if (player.gameboard.allSunked()) { prompt('computer wins'); } else if (ia.gameboard.allSunked()) { prompt('player'); }
-  };
-  return { checkForWin, newGame };
+
+  return { newGame };
 })();
 
 export default gameMethods;

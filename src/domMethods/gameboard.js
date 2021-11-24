@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
 import ShipFactory from '../factoryF/ship';
 
 const gameboardMethods = (() => {
@@ -22,6 +24,16 @@ const gameboardMethods = (() => {
 const cellListeners = (() => {
   let shipCount = 0;
 
+  const checkForWin = (player, ia) => {
+    if (player.playerGameboard.allSunked() === true) {
+      prompt('computer wins');
+      location.reload();
+    } else if (ia.playerGameboard.allSunked() === true) {
+      prompt('player wins');
+      location.reload();
+    }
+  };
+
   const printHit = (playerName, position) => {
     const cellArray = document.querySelector(`.${playerName}`).children;
     cellArray[position].textContent = 'X';
@@ -29,8 +41,10 @@ const cellListeners = (() => {
 
   const hitListener = (ia, cordinates, player) => {
     ia.playerGameboard.receiveAttack(1, 1, cordinates);
+    checkForWin(player, ia);
     printHit('ia', cordinates);
     printHit('player', ia.iaAttack(player));
+    checkForWin(player, ia);
   };
 
   const addHitListener = (ia, player) => {
@@ -45,6 +59,8 @@ const cellListeners = (() => {
   const checkIfPreparationStateEnds = (countShip, ia, player) => {
     if (countShip >= 7) {
       addHitListener(ia, player);
+      // eslint-disable-next-line no-use-before-define
+      getRandomIaShips(ia);
     }
   };
   const createShipList = () => {
@@ -58,6 +74,20 @@ const cellListeners = (() => {
     const shipList = [carrier, battleship, cruiser, submarine, destroyer, patrolBoat, ferry];
     return shipList;
   };
+  const getRandomIaShips = (ia) => {
+    const shipList = createShipList();
+    let cords = Math.floor(Math.random() * 100) + 1;
+
+    for (let index = 0; index < shipList.length; index += 1) {
+      const ship = shipList[index];
+      // eslint-disable-next-line max-len
+      while (ia.playerGameboard.putShip(ship, 1, 1, cords) !== true) {
+        cords = Math.floor(Math.random() * 100) + 1;
+      }
+      ia.playerGameboard.putShip(ship, 1, 1, cords);
+      index += 1;
+    }
+  };
   const printShip = (ship, cordinates) => {
     const cellArray = document.querySelector(`.${'player'}`).children;
     for (let index = 0; index < ship.length; index += 1) {
@@ -68,11 +98,11 @@ const cellListeners = (() => {
 
   const shipListener = (player, cordinates, ia) => {
     const shipList = createShipList();
-    checkIfPreparationStateEnds(shipCount, ia, player);
     // eslint-disable-next-line max-len
     if (shipList[shipCount] && player.playerGameboard.putShip(shipList[shipCount], 1, 1, cordinates)) {
       printShip(shipList[shipCount], cordinates);
       shipCount += 1;
+      checkIfPreparationStateEnds(shipCount, ia, player);
     }
   };
   const addShipListener = (player, ia) => {

@@ -27,7 +27,6 @@ const helperMethods = (() => {
       cordinates = cords - 1;
     }
     let expectedCordinates = cordinates + ship.length;
-    console.log(expectedCordinates, cordinates);
 
     expectedCordinates = expectedCordinates.toString() - 1;
 
