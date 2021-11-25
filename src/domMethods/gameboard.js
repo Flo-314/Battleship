@@ -40,11 +40,12 @@ const cellListeners = (() => {
   };
 
   const hitListener = (ia, cordinates, player) => {
-    ia.playerGameboard.receiveAttack(1, 1, cordinates);
-    checkForWin(player, ia);
-    printHit('ia', cordinates);
-    printHit('player', ia.iaAttack(player));
-    checkForWin(player, ia);
+    if (ia.playerGameboard.receiveAttack(1, 1, cordinates) === true) {
+      checkForWin(player, ia);
+      printHit('ia', cordinates);
+      printHit('player', ia.iaAttack(player));
+      checkForWin(player, ia);
+    }
   };
 
   const addHitListener = (ia, player) => {
@@ -61,16 +62,24 @@ const cellListeners = (() => {
       addHitListener(ia, player);
       // eslint-disable-next-line no-use-before-define
       getRandomIaShips(ia);
+      const shipInfo = document.querySelector('#shipInfo').innerHTML = '';
     }
   };
   const createShipList = () => {
     const carrier = ShipFactory(5);
+    carrier.name = 'carrier';
     const battleship = ShipFactory(4);
+    battleship.name = 'battleship';
     const cruiser = ShipFactory(3);
+    cruiser.name = 'cruiser';
     const submarine = ShipFactory(3);
+    submarine.name = 'submarine';
     const destroyer = ShipFactory(2);
+    destroyer.name = 'destroyer';
     const patrolBoat = ShipFactory(1);
+    patrolBoat.name = 'patrol Boat';
     const ferry = ShipFactory(1);
+    ferry.name = 'ferry';
     const shipList = [carrier, battleship, cruiser, submarine, destroyer, patrolBoat, ferry];
     return shipList;
   };
@@ -85,7 +94,12 @@ const cellListeners = (() => {
         cords = Math.floor(Math.random() * 100) + 1;
       }
       ia.playerGameboard.putShip(ship, 1, 1, cords);
-      index += 1;
+      console.log(ship);
+      const cellArray = document.querySelector(`.${'ia'}`).children;
+      for (let i = 0; i < ship.length; i += 1) {
+        const cell = cellArray[i + cords];
+        cell.style.color = 'red';
+      }
     }
   };
   const printShip = (ship, cordinates) => {
@@ -93,16 +107,20 @@ const cellListeners = (() => {
     for (let index = 0; index < ship.length; index += 1) {
       const cell = cellArray[index + cordinates - 1];
       cell.textContent = 'O';
+      cell.style.color = 'blue';
     }
   };
 
   const shipListener = (player, cordinates, ia) => {
     const shipList = createShipList();
+    const shipInfo = document.querySelector('#shipInfo');
+
     // eslint-disable-next-line max-len
     if (shipList[shipCount] && player.playerGameboard.putShip(shipList[shipCount], 1, 1, cordinates)) {
       printShip(shipList[shipCount], cordinates);
       shipCount += 1;
       checkIfPreparationStateEnds(shipCount, ia, player);
+      if (shipList[shipCount]) { shipInfo.textContent = `The next Ship will be: ${`${shipList[shipCount].name}(${shipList[shipCount].length}`})`; }
     }
   };
   const addShipListener = (player, ia) => {
